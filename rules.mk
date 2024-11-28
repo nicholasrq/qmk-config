@@ -1,17 +1,33 @@
-# Set any rules.mk overrides for your specific keymap here.
-# See rules at https://docs.qmk.fm/#/config_options?id=the-rulesmk-file
-SRC += features/achordion.c
-# SRC += keymaps/colemakdh.h
-CONSOLE_ENABLE = no
-COMMAND_ENABLE = no
-MOUSEKEY_ENABLE = yes
-SPACE_CADET_ENABLE = yes
-ORYX_ENABLE = yes
-RGB_MATRIX_CUSTOM_KB = yes
-TAP_DANCE_ENABLE = yes
-CAPS_WORD_ENABLE = yes
-COMBO_ENABLE = yes
-# NKRO_ENABLE = yes
-# STENO_ENABLE = yes
-# STENO_PROTOCOL = geminipr
-# ACHORDION_ENABLE = yes
+# MCU name
+MCU = STM32F303
+
+# Bootloader selection
+BOOTLOADER = ignition
+
+# Build Options
+#   change yes to no to disable
+#
+BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
+MOUSEKEY_ENABLE = yes       # Mouse keys
+EXTRAKEY_ENABLE = yes       # Audio control and System control
+CONSOLE_ENABLE = no        # Console for debug
+COMMAND_ENABLE = no        # Commands for debug and configuration
+NKRO_ENABLE = yes           # Enable N-Key Rollover
+BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
+RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
+AUDIO_ENABLE = no          # Audio output
+CUSTOM_MATRIX = lite
+SWAP_HANDS_ENABLE = yes
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = is31fl3731
+EEPROM_DRIVER = vendor
+MOUSE_SHARED_EP = no
+LTO_ENABLE = no
+DFU_SUFFIX_ARGS = -v 3297 -p 0791
+DEBUG_ENABLE = yes
+
+#project specific files
+SRC += matrix.c
+QUANTUM_LIB_SRC += i2c_master.c
+
+MOUSE_SHARED_EP = no
