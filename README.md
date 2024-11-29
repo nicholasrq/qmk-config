@@ -2,6 +2,8 @@
 
 ![Voyager](https://www.zsa.io/cdn-cgi/image/width=5104,quality=80,format=auto/@voyager/images/home/travel-setup-3.webp)
 
+![Layout](/assets/keymap.png)
+
 A next-gen split, ergonomic keyboard with an active left side, USB type C, integrated wrist rest, and a thumb cluster that can move.
 
 - Keyboard Maintainer: [drashna](https://github.com/drashna), [ZSA](https://github.com/zsa/)
