@@ -1,9 +1,7 @@
 ![Logo](./assets/GitHub.png)
 
-# Voyager
-
-My Voyager layout (still improving).
+<h1 align="center">ZSA Voyager QKM Firmware</h1>
 
 ![Voyager](./assets/keyboard.jpg)
 
-![Layout](/assets/keymap.png)
+![Layout](./assets/keymap.png)
