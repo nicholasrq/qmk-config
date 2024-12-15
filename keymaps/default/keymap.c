@@ -61,8 +61,8 @@ enum layers {
 #define HOME_SEMI MT(MOD_RGUI, KC_SCLN)
 
 // Symbol layer
-#define HOME_G LT(_SYM, KC_G)
-#define HOME_H LT(_SYM, KC_H)
+#define HOME_V LT(_SYM, KC_V)
+#define HOME_N LT(_SYM, KC_H)
 
 #define LT1 LT(_TMUX,KC_SPACE)
 #define LT2 LT(_NUM,KC_TAB)
@@ -71,17 +71,20 @@ enum layers {
 #define RT2 LT(_NUM,KC_ENTER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/**
+* Enter on NUM layer
+*/
     [_DEFAULT] = LAYOUT_LR(
-        _______,        _______,        _______,        _______,        _______,        _______,
+        KC_BRMD,        KC_BRMU,        _______,        _______,        _______,        _______,
         KC_TILD,        KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,
-        KC_ESCAPE,      HOME_A,         HOME_S,         HOME_D,         HOME_F,         HOME_G,
-        CW_TOGG,        KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,
+        KC_ESCAPE,      HOME_A,         HOME_S,         HOME_D,         HOME_F,         KC_G,
+        CW_TOGG,        KC_Z,           KC_X,           KC_C,           HOME_V,         KC_B,
                                                                                         LT1,            LT2,
 
-                        _______,        _______,        _______,        _______,        _______,        MAC_LOCK,
+                        KC_VOLD,        KC_VOLU,        KC_MUTE,        KC_MPLY,        KC_MNXT,        MAC_LOCK,
                         KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_LBRC,
-                        HOME_H,         HOME_J,         HOME_K,         HOME_L,         HOME_SEMI,      KC_QUOTE,
-                        KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,     CW_TOGG,
+                        KC_H,         HOME_J,         HOME_K,         HOME_L,         HOME_SEMI,      KC_QUOTE,
+                        HOME_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,     CW_TOGG,
         RT2,            RT1
     ),
     [_NUM] = LAYOUT_LR(
@@ -131,38 +134,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
-const uint16_t PROGMEM combo0[] = { HOME_D, HOME_F, COMBO_END};
-const uint16_t PROGMEM combo1[] = { HOME_J, HOME_K, COMBO_END};
-const uint16_t PROGMEM combo2[] = { HOME_S, HOME_D, COMBO_END};
-const uint16_t PROGMEM combo3[] = { HOME_K, HOME_L, COMBO_END};
-const uint16_t PROGMEM combo4[] = { KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM combo5[] = { KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM combo6[] = { KC_M, KC_COMMA, COMBO_END};
-const uint16_t PROGMEM combo7[] = { KC_COMMA, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo8[] = { KC_DOT, KC_SLASH, COMBO_END};
-const uint16_t PROGMEM combo9[] = { KC_M, KC_SLASH, COMBO_END};
-const uint16_t PROGMEM combo10[] = { KC_M, KC_COMMA, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo11[] = { KC_COMMA, KC_SLASH, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo12[] = { KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM combo13[] = { KC_C, KC_V, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo0, CM_LPRN),
-    COMBO(combo1, CM_RPRN),
-    COMBO(combo2, CM_LBRC),
-    COMBO(combo3, CM_RBRC),
-    COMBO(combo4, KC_MINUS),
-    COMBO(combo5, KC_EQUAL),
-    COMBO(combo6, KC_AUDIO_VOL_DOWN),
-    COMBO(combo7, KC_AUDIO_VOL_UP),
-    COMBO(combo8, KC_MEDIA_PLAY_PAUSE),
-    COMBO(combo9, KC_AUDIO_MUTE),
-    COMBO(combo10, KC_MEDIA_PREV_TRACK),
-    COMBO(combo11, KC_MEDIA_NEXT_TRACK),
-    COMBO(combo12, KC_BRMD),
-    COMBO(combo13, KC_BRMU),
-};
-
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MT(MOD_LGUI, KC_A):
@@ -196,8 +167,6 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [2] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 255, 255}, {0, 255, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 255, 255}, {0, 255, 255}, {0, 255, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 255, 255}, {0, 255, 255}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
 
     [3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {171, 224, 181}, {171, 224, 181}, {171, 224, 181}, {171, 224, 181}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {23, 242, 223}, {23, 242, 223}, {23, 242, 223}, {23, 242, 223}, {0, 0, 0}, {0, 0, 0}, {23, 242, 223}, {23, 242, 223}, {23, 242, 223}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {23, 242, 223}, {23, 242, 223}, {23, 242, 223}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-
-    [4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {197, 235, 186}, {197, 235, 186}, {197, 235, 186}, {197, 235, 186}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {197, 235, 186}, {197, 235, 186}, {197, 235, 186}, {197, 235, 186}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
 };
 
 void set_layer_color(int layer) {
@@ -226,13 +195,10 @@ bool rgb_matrix_indicators_user(void) {
     }
     switch (biton32(layer_state)) {
         case 2:
-            set_layer_color(2);
+            set_layer_color(_TMUX);
             break;
         case 3:
-            set_layer_color(3);
-            break;
-        case 4:
-            set_layer_color(4);
+            set_layer_color(_NUM);
             break;
         default:
             if (rgb_matrix_get_flags() == LED_FLAG_NONE) rgb_matrix_set_color_all(0, 0, 0);
