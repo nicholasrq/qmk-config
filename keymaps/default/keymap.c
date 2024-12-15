@@ -1,8 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "features/achordion.h"
-#include "keymap_steno.h"
 #include "keymaps/colemakdh.h"
+#include "layout.h" // Neat layout remap
+#include "keys.h" // Macros for mod keys
 
 // remap for DH
 #undef CM_B
@@ -21,15 +22,13 @@
 
 enum custom_keycodes {
     RGB_SLD = ML_SAFE_RANGE,
-    MACRO_P_SESS,
-    MACRO_N_SESS,
-    MACRO_SELECT,
-    MACRO_ZOOM,
-    MACRO_SESSIONS,
-    MACRO_P_WIN,
-    MACRO_N_WIN,
-    ST_MACRO_7,
-    ST_MACRO_8,
+    TX_PR_SESS,
+    TX_NX_SESS,
+    TX_SEL,
+    TX_ZOOM,
+    TX_SESSIONS,
+    TX_PR_WIN,
+    TX_NX_WIN,
     MAC_LOCK,
 };
 
@@ -43,6 +42,7 @@ enum tap_dance_codes {
 enum layers {
     _DEFAULT,
     _NUM,
+    _SYM,
     _TMUX,
 };
 
@@ -50,45 +50,91 @@ enum layers {
 #define THUMB_TAB LT(3, KC_TAB)
 #define THUMB_ENTER LT(4, KC_ENTER)
 
-#define MT_LGUI MT(MOD_LGUI, KC_A)
-#define MT_LALT MT(MOD_LALT, KC_S)
-#define MT_LCTL MT(MOD_LCTL, KC_D)
-#define MT_LSFT MT(MOD_LSFT, KC_F)
+#define HOME_A MT(MOD_LGUI, KC_A)
+#define HOME_S MT(MOD_LALT, KC_S)
+#define HOME_D MT(MOD_LCTL, KC_D)
+#define HOME_F MT(MOD_LSFT, KC_F)
 
-#define MT_RSFT MT(MOD_RSFT, KC_J)
-#define MT_RCTL MT(MOD_RCTL, KC_K)
-#define MT_RALT MT(MOD_LALT, KC_L)
-#define MT_RGUI MT(MOD_RGUI, KC_SCLN)
+#define HOME_J MT(MOD_RSFT, KC_J)
+#define HOME_K MT(MOD_RCTL, KC_K)
+#define HOME_L MT(MOD_LALT, KC_L)
+#define HOME_SEMI MT(MOD_RGUI, KC_SCLN)
 
+// Symbol layer
+#define HOME_G LT(_SYM, KC_G)
+#define HOME_H LT(_SYM, KC_H)
+
+#define LT1 LT(_TMUX,KC_SPACE)
+#define LT2 LT(_NUM,KC_TAB)
+
+#define RT1 LT(_TMUX,KC_BSPC)
+#define RT2 LT(_NUM,KC_ENTER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_DEFAULT] = LAYOUT_voyager(
-        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          MAC_LOCK,
-        KC_TILD,        KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLS,
-        KC_ESCAPE,      MT_LGUI,        MT_LALT,        MT_LCTL,        MT_LSFT,        KC_G,                                           KC_H,           MT_RSFT,        MT_RCTL,        MT_RALT,        MT_RGUI,        KC_QUOTE,
-        CW_TOGG,        KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       CW_TOGG,
-                                                                        LT(_TMUX,KC_SPACE), LT(_NUM,KC_TAB),                            LT(_NUM,KC_ENTER),LT(_TMUX,KC_BSPC)
+    [_DEFAULT] = LAYOUT_LR(
+        _______,        _______,        _______,        _______,        _______,        _______,
+        KC_TILD,        KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,
+        KC_ESCAPE,      HOME_A,         HOME_S,         HOME_D,         HOME_F,         HOME_G,
+        CW_TOGG,        KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,
+                                                                                        LT1,            LT2,
+
+                        _______,        _______,        _______,        _______,        _______,        MAC_LOCK,
+                        KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_LBRC,
+                        HOME_H,         HOME_J,         HOME_K,         HOME_L,         HOME_SEMI,      KC_QUOTE,
+                        KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,     CW_TOGG,
+        RT2,            RT1
     ),
-    [_NUM] = LAYOUT_voyager(
-        RGB_MODE_FORWARD,RGB_TOG,       RGB_VAD,        RGB_VAI,        KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
-        KC_RCBR,        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_0,           KC_RBRC,
-        KC_PLUS,        KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        KC_NO,                                          KC_SCLN,        KC_4,           KC_5,           KC_6,           KC_MINUS,       KC_EQUAL,
-        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_GRAVE,       KC_1,           KC_2,           KC_3,           KC_BSLS,        KC_ENTER,
-                                                                        KC_TRNS,        KC_TRNS,                                        KC_TRNS,        KC_TRNS
+    [_NUM] = LAYOUT_LR(
+        /// Left
+        RGB_MODE_FORWARD,RGB_TOG,       RGB_VAD,        RGB_VAI,        _______,        _______,
+        _______,        _______,        _______,        _______,        _______,        _______,
+        _______,        KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,
+        _______,        _______,        _______,        _______,        _______,        _______,
+                                                                                        KC_TRNS,        KC_TRNS,
+
+        /// Right
+                        _______,        _______,        _______,        _______,        _______,        _______,
+                        KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_0,           KC_RBRC,
+                        KC_COLN,        KC_4,           KC_5,           KC_6,           KC_MINUS,       KC_EQUAL,
+                        KC_COMM,        KC_1,           KC_2,           KC_3,           KC_PLUS,        KC_ENTER,
+        KC_TRNS,        KC_TRNS
     ),
-    [_TMUX] = LAYOUT_voyager(
-        KC_NO,          KC_NO,          KC_NO,          KC_MS_BTN1,     KC_MS_BTN2,     KC_MS_BTN3,                                     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
-        KC_NO,          MACRO_P_WIN,    MACRO_ZOOM,     MACRO_SELECT,   MACRO_SESSIONS, MACRO_N_WIN,                                    KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
-        KC_NO,          KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        KC_NO,                                          KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_NO,          KC_NO,
-        KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
-                                                                        KC_TRNS,        KC_TRNS,                                        KC_TRNS,        KC_TRNS
+    [_SYM] = LAYOUT_LR(
+        /// Left
+        _______,        _______,        _______,        _______,        _______,        _______,
+        _______,        KC_HASH,        KC_AT,          KC_EQL,         KC_LPAR,        KC_RPAR,
+        _______,        KC_BTI,         KC_UNDS,        KC_AMP,         KC_LBRC,        KC_RBRC,
+        _______,        _______,        KC_MINUS,       KC_DLR,         KC_LCUR,        KC_RCUR,
+                                                                                        KC_TRNS,        KC_TRNS,
+
+        /// Right
+                        _______,        _______,        _______,        _______,        _______,        _______,
+                        KC_COLN,        KC_LANG,        KC_EQL,         KC_RANG,        _______,        _______,
+                        KC_SCLN,        KC_AMP,         KC_AST,         KC_BSLS,        KC_SLASH,        _______,
+                        KC_GRAVE,       KC_PIPE,        KC_POW,         KC_PERC,        _______,        _______,
+        COPY,           PASTE
+    ),
+    [_TMUX] = LAYOUT_LR(
+        /// Left
+        _______,        _______,        _______,        KC_MS_BTN1,     KC_MS_BTN2,     KC_MS_BTN3,
+        _______,        TX_PR_WIN,      TX_ZOOM,        TX_SEL,         TX_SESSIONS,    TX_NX_WIN,
+        _______,        KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,
+        _______,        _______,        _______,        _______,        _______,        _______,
+                                                                                        KC_TRNS,        KC_TRNS,
+
+        /// Right
+                        _______,        _______,        _______,          _______,          _______,          _______,
+                        _______,        _______,        _______,          _______,          _______,          _______,
+                        KC_LEFT,        KC_DOWN,        KC_UP,            KC_RIGHT,         _______,          _______,
+                        _______,        _______,        _______,          _______,          _______,          _______,
+        KC_TRNS,        KC_TRNS
     ),
 };
 
-const uint16_t PROGMEM combo0[] = { MT_LCTL, MT_LSFT, COMBO_END};
-const uint16_t PROGMEM combo1[] = { MT_RSFT, MT_RCTL, COMBO_END};
-const uint16_t PROGMEM combo2[] = { MT_LALT, MT_LCTL, COMBO_END};
-const uint16_t PROGMEM combo3[] = { MT_RCTL, MT_RALT, COMBO_END};
+const uint16_t PROGMEM combo0[] = { HOME_D, HOME_F, COMBO_END};
+const uint16_t PROGMEM combo1[] = { HOME_J, HOME_K, COMBO_END};
+const uint16_t PROGMEM combo2[] = { HOME_S, HOME_D, COMBO_END};
+const uint16_t PROGMEM combo3[] = { HOME_K, HOME_L, COMBO_END};
 const uint16_t PROGMEM combo4[] = { KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM combo5[] = { KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo6[] = { KC_M, KC_COMMA, COMBO_END};
@@ -211,37 +257,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     switch (keycode) {
-        case MACRO_P_SESS:
+        case TX_PR_SESS:
             if (record->event.pressed) {
                 tmux_macro(LSFT(KC_9));
             }
             break;
-        case MACRO_N_SESS:
+        case TX_NX_SESS:
             if (record->event.pressed) {
                 tmux_macro(LSFT(KC_0));
             }
             break;
-        case MACRO_SELECT:
+        case TX_SEL:
             if (record->event.pressed) {
                 tmux_macro(KC_LBRC);
             }
             break;
-        case MACRO_ZOOM:
+        case TX_ZOOM:
             if (record->event.pressed) {
                 tmux_macro(CM_Z);
             }
             break;
-        case MACRO_SESSIONS:
+        case TX_SESSIONS:
             if (record->event.pressed) {
                 tmux_macro(LSFT(CM_T));
             }
             break;
-        case MACRO_P_WIN:
+        case TX_PR_WIN:
             if (record->event.pressed) {
                 tmux_macro(CM_P);
             }
             break;
-        case MACRO_N_WIN:
+        case TX_NX_WIN:
             if (record->event.pressed) {
                 tmux_macro(CM_N);
             }
@@ -449,3 +495,25 @@ tap_dance_action_t tap_dance_actions[] = {
     [DANCE_PER] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_per, dance_per_finished, dance_per_reset),
     [DANCE_DLR] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_dlr, dance_dlr_finished, dance_dlr_reset),
 };
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch(keycode) {
+        // Characters
+        case KC_A ... KC_Z:
+        // Exception for Colemak
+        case CM_O:
+            add_weak_mods(MOD_BIT(KC_LSFT));
+            return true;
+        // Numbers
+        case KC_1 ... KC_0:
+            return true;
+        // Symbols to ignore in CAPS_WORD
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+
+        default:
+            return false;
+    }
+}
