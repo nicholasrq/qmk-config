@@ -1,3 +1,5 @@
+![Logo](./assets/GitHub.png)
+
 # Voyager
 
 My Voyager layout (still improving).
