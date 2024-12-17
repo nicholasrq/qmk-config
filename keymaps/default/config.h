@@ -4,10 +4,9 @@
 */
 #undef IGNORE_MOD_TAP_INTERRUPT
 #undef TAPPING_TERM
-#define TAPPING_TERM 175
+#define TAPPING_TERM 280
 
 #define FIRMWARE_VERSION u8"r99Jn/KpMJA"
-// #define PERMISSIVE_HOLD
 
 #define COMBO_TERM 35
 

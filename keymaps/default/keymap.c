@@ -1,3 +1,4 @@
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
 #include "version.h"
 #include "features/achordion.h"
@@ -50,7 +51,7 @@ enum layers {
 #define THUMB_TAB LT(3, KC_TAB)
 #define THUMB_ENTER LT(4, KC_ENTER)
 
-#define HOME_A MT(MOD_LGUI, KC_A)
+#define HOME_Z MT(MOD_LGUI, KC_Z)
 #define HOME_S MT(MOD_LALT, KC_S)
 #define HOME_D MT(MOD_LCTL, KC_D)
 #define HOME_F MT(MOD_LSFT, KC_F)
@@ -58,11 +59,11 @@ enum layers {
 #define HOME_J MT(MOD_RSFT, KC_J)
 #define HOME_K MT(MOD_RCTL, KC_K)
 #define HOME_L MT(MOD_LALT, KC_L)
-#define HOME_SEMI MT(MOD_RGUI, KC_SCLN)
+#define HOME_SLASH MT(MOD_RGUI, KC_SLASH)
 
 // Symbol layer
-#define HOME_V LT(_SYM, KC_V)
-#define HOME_N LT(_SYM, KC_H)
+#define HOME_A LT(_SYM, KC_A)
+#define HOME_SEMI LT(_SYM, KC_SCLN)
 
 #define LT1 LT(_TMUX,KC_SPACE)
 #define LT2 LT(_NUM,KC_TAB)
@@ -78,14 +79,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BRMD,        KC_BRMU,        _______,        _______,        _______,        _______,
         KC_TILD,        KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,
         KC_ESCAPE,      HOME_A,         HOME_S,         HOME_D,         HOME_F,         KC_G,
-        CW_TOGG,        KC_Z,           KC_X,           KC_C,           HOME_V,         KC_B,
+        CW_TOGG,        HOME_Z,         KC_X,           KC_C,           KC_V,         KC_B,
                                                                                         LT1,            LT2,
 
                         KC_VOLD,        KC_VOLU,        KC_MUTE,        KC_MPLY,        KC_MNXT,        MAC_LOCK,
                         KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_LBRC,
-                        KC_H,         HOME_J,         HOME_K,         HOME_L,         HOME_SEMI,      KC_QUOTE,
-                        HOME_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,     CW_TOGG,
-        RT2,            RT1
+                        KC_H,           HOME_J,         HOME_K,         HOME_L,         HOME_SEMI,      KC_QUOTE,
+                        KC_N,           KC_M,           KC_COMMA,       KC_DOT,         HOME_SLASH,       CW_TOGG,
+        RT2,        RT1
     ),
     [_NUM] = LAYOUT_LR(
         /// Left
@@ -100,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_0,           KC_RBRC,
                         KC_COLN,        KC_4,           KC_5,           KC_6,           KC_MINUS,       KC_EQUAL,
                         KC_COMM,        KC_1,           KC_2,           KC_3,           KC_PLUS,        KC_ENTER,
-        KC_TRNS,        KC_TRNS
+        KC_TRNS,    KC_TRNS
     ),
     [_SYM] = LAYOUT_LR(
         /// Left
@@ -108,12 +109,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,        KC_HASH,        KC_AT,          KC_EQL,         KC_LPAR,        KC_RPAR,
         _______,        KC_BTI,         KC_UNDS,        KC_AMP,         KC_LBRC,        KC_RBRC,
         _______,        _______,        KC_MINUS,       KC_DLR,         KC_LCUR,        KC_RCUR,
-                                                                                        KC_TRNS,        KC_TRNS,
+                                                                                        BACK,           FORWARD,
 
         /// Right
                         _______,        _______,        _______,        _______,        _______,        _______,
-                        KC_COLN,        KC_LANG,        KC_EQL,         KC_RANG,        _______,        _______,
-                        KC_SCLN,        KC_AMP,         KC_AST,         KC_BSLS,        KC_SLASH,        _______,
+                        CM_COLN,        KC_LANG,        KC_EQL,         KC_RANG,        _______,        _______,
+                        CM_SCLN,        KC_AMP,         KC_AST,         KC_BSLS,        KC_SLASH,        _______,
                         KC_GRAVE,       KC_PIPE,        KC_POW,         KC_PERC,        _______,        _______,
         COPY,           PASTE
     ),
@@ -122,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,        _______,        _______,        KC_MS_BTN1,     KC_MS_BTN2,     KC_MS_BTN3,
         _______,        TX_PR_WIN,      TX_ZOOM,        TX_SEL,         TX_SESSIONS,    TX_NX_WIN,
         _______,        KC_LGUI,        KC_LALT,        KC_LCTL,        KC_LSFT,        _______,
-        _______,        _______,        _______,        _______,        _______,        _______,
+        _______,        G(KC_LBRC),     G(KC_RBRC),     _______,        _______,        _______,
                                                                                         KC_TRNS,        KC_TRNS,
 
         /// Right
@@ -483,3 +484,5 @@ bool caps_word_press_user(uint16_t keycode) {
             return false;
     }
 }
+
+
